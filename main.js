@@ -12,8 +12,8 @@ bits.addBinFunctions();
 // var client = new ModbusRTU();
 // // open connection to a tcp line
 //client.connectTCP("95.158.47.15", { port: 30502 });
-//client.connectTCP("192.168.1.100", { port: 502 });
-client.connectTCP("192.168.1.225", { port: 502 });
+client.connectTCP("192.168.1.100", { port: 502 });
+//client.connectTCP("192.168.1.225", { port: 502 });
  
 //client.connectTCP(tcpPort, { port: 502 });
 client.setID(1);
@@ -35,13 +35,17 @@ function testgetM340registersToFloat(a, b) {
     let restM = b & 0x7F;
     const M = (restM << 16) + a;
     console.log(sign, E , M);
-    if (E > 0) {
-        return sign * Math.pow(2, (E - 127))* (1 + M / Math.pow(2, 23));
-    } else {
-        return sign * Math.pow(2, (-126)) *  M / Math.pow(2, 23) ; 
-    }
+        if (E === 0) {
+            return M === 0 ? 0 : sign * Math.pow(2, (-126)) *  M / Math.pow(2, 23) ; 
+        } else if (E < 255) {
+            return sign * Math.pow(2, (E - 127))* (1 + M / Math.pow(2, 23));
+        } else {
+                if (M === 0 ) return sign === 1 ? Number.POSITIVE_INFINITY : Number.NEGATIVE_INFINITY;
+                return NaN;
+        }
 
 }
+
 console.log( testgetM340registersToFloat(0, 0));
 
 console.log( (3 << 16) + 3, ((3 << 16) + 3).bin());
@@ -75,7 +79,7 @@ let handler = setInterval(function() {
     // });
     
     //PromiseAPI
-    client.readHoldingRegisters(2020, 10).then(data => {
+    client.readHoldingRegisters(1670, 20).then(data => {
           const _answer = data.data;
         // console.log(++triesNumber, /*_answer,*/ m340.getRealFromModbusCoils(_answer, 0), 
         // _answer[2], _answer[3],

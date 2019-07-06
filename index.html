@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <title>Socket.io</title>
+    </head>
+ 
+    <body>
+        <h1>Communicating with socket.io!</h1>
+
+        <p><input type="button" value="Poke the server" id="poke" /></p>
+        <p id="value1">NaN</p>
+        <p id="value2">NaN</p>
+        <p id="value3">NaN</p>
+
+        <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.2.0/socket.io.js"></script>
+        <script>
+            var socket = io.connect('http://localhost:3001');
+
+            // Посетителя просят ввести имя пользователя...
+            var username = prompt('What\'s your username?');
+            
+            // Оно отправляется в сообщении типа "little_newbie" (чтобы отличать его от сообщений типа "message")
+            socket.emit('little_newbie', username);
+
+            // Диалоговое окно отображается, когда сервер отправляет нам сообщение типа "message"
+            socket.on('message', function(message) {
+                alert('The server has a message for you: ' + message);
+            });
+
+            socket.on('newdata', function(message) {
+                //console.log('New data received: ' + message);
+                console.log( 'New data received: ' + JSON.parse(message));
+                dataM340 = JSON.parse(message);
+
+                document.getElementById('value1').innerText = dataM340[0];
+                document.getElementById('value2').innerText = dataM340[1];
+               
+               // document.getElementById('value2').innerText = dataM340[1];
+               $('#value3').text = dataM340[2];
+              // $('#value3').innerText = dataM340;
+             })
+
+            // Когда нажимается кнопка, сообщение типа "message" отправляется на сервер
+            $('#poke').click(function () {
+                socket.emit('message', 'Hi server, how are you?');
+            })
+        </script>
+    </body>
+</html>

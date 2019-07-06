@@ -5,11 +5,13 @@ function getM340registersToFloat(a, b) {
     let E = (b & 0x7F80) >>> 7;
     let restM = b & 0x7F;
     const M = (restM << 16) + a;
-    //console.log(sign, E , M);
-    if (E > 0) {
+    if (E === 0) {
+        return M === 0 ? 0 : sign * Math.pow(2, (-126)) *  M / Math.pow(2, 23) ; 
+    } else if (E < 255) {
         return sign * Math.pow(2, (E - 127))* (1 + M / Math.pow(2, 23));
     } else {
-        return sign * Math.pow(2, (-126)) *  M / Math.pow(2, 23) ; 
+            if (M === 0 ) return sign === 1 ? Number.POSITIVE_INFINITY : Number.NEGATIVE_INFINITY;
+            return NaN;
     }
 }
 
