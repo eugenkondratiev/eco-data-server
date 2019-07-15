@@ -1,5 +1,5 @@
 var TcpPort = require("modbus-serial").TcpPort;
-var tcpPort = new TcpPort("192.168.1.42");
+var tcpPort = new TcpPort("192.168.1.225");
 var ModbusRTU = require("modbus-serial");
 var client = new ModbusRTU(tcpPort);
 
@@ -11,8 +11,8 @@ bits.addBinFunctions();
 // var ModbusRTU = require("modbus-serial");
 // var client = new ModbusRTU();
 // // open connection to a tcp line
-//client.connectTCP("95.158.47.15", { port: 30502 });
-client.connectTCP("192.168.1.100", { port: 502 });
+client.connectTCP("95.158.47.15", { port: 30502 });
+//client.connectTCP("192.168.1.100", { port: 502 });
 //client.connectTCP("192.168.1.225", { port: 502 });
  
 //client.connectTCP(tcpPort, { port: 502 });
@@ -23,9 +23,9 @@ client.setID(1);
 //  console.log(7.5.bin());
 // console.log(Number(3.3).bin());
 const math = require('./math-utils'); 
-console.log(math.uintToInt(32768));
-console.log(" 36176 =>" + math.uintToInt(36176));
-console.log(" 49407 =>" + math.uintToInt(49407));
+// console.log(math.uintToInt(32768));
+// console.log(" 36176 =>" + math.uintToInt(36176));
+// console.log(" 49407 =>" + math.uintToInt(49407));
 
 
 

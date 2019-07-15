@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <title>Котельная 2. Текущие данные</title>
+        <!-- <link rel="stylesheet" type="text/css" href="https://drive.google.com/open?id=1ph628mU4fytAdNYFb4S2SI_OGKAsp2yC"> -->
+        <link rel="stylesheet" type="text/css" href="../css/styles.css">
+    </head>
+ 
+    <body>
+        <h1>Котельная 2. 
+            Текущие данные</h1>
+
+        <!-- <p><input type="button" value="Poke the server" id="poke" /></p> -->
+        <p ><span class="aiLabel">Производимое тепло, Гкал/ч </span><span class="value" id="W_38"> NaN </span></p>
+        <p ><span class="aiLabel">Расход воды, м3/час </span><span class="value" id="Q_39"> NaN </span></p>
+        <p ><span class="aiLabel">Разрежение в топке, Па </span><span class="value" id="P_21"> NaN </span></p>
+        <p ><span class="aiLabel">Давление в коллекторе, см.вд.ст.   </span><span class="value" id="P_34"> NaN </span></p>
+        <p ><span class="aiLabel">ПЧ дымососа, Гц    </span><span class="value" id="EI_86"> NaN </span></p>
+        <p ><span class="aiLabel">ПЧ дутьевого вентилятора, Гц    </span><span class="value" id="EI_83"> NaN </span></p>
+        <p ><span class="aiLabel">ПЧ шнека-питателя, Гц    </span><span class="value" id="EI_74"> NaN </span></p>
+        <p ><span class="aiLabel">Давление на зоне 1, Па    </span><span class="value" id="P_32"> NaN </span></p>
+        <p ><span class="aiLabel">Давление на зоне 2, Па    </span><span class="value" id="P_31"> NaN </span></p>
+        <p ><span class="aiLabel">Температура оброротной воды, °С    </span><span class="value" id="T_5"> NaN </span></p>
+        <p ><span class="aiLabel">Температура горячей воды, °С    </span><span class="value" id="T_3"> NaN </span></p>
+        <p ><span class="aiLabel">Температура дымовых газов до ЭКО, °С    </span><span class="value" id="T_10"> NaN </span></p>
+        <p ><span class="aiLabel">Температура дымовых газов перед дымососом, °С    </span><span class="value" id="T_4"> NaN </span></p>
+        <p ><span class="aiLabel">Давление воды в котле, МПа.   </span><span class="value" id="P_19"> NaN </span></p>
+        <p ><span class="aiLabel">Тепло за прошлые сутки, Гкал.   </span><span class="value" id="lastDayW_38"> NaN </span></p>
+<!--  
+        <h1>Котельная 1. Текущие данные</h1>
+        <p ><span class="aiLabel">Тепло за прошлые сутки, Гкал.   </span><span class="value" id="Eco1_lastDayW_38"> NaN </span></p>
+        <p ><span class="aiLabel">Производимое тепло, Гкал/ч </span><span class="value" id="Eco1_W_38"> NaN </span></p>
+        <p ><span class="aiLabel">Расход воды, м3/час </span><span class="value" id="Eco1_Q_39"> NaN </span></p>
+        <p ><span class="aiLabel">Температура дымовых газов до ЭКО, °С    </span><span class="value" id="Eco1_T_10"> NaN </span></p>
+        <p ><span class="aiLabel">ПЧ шнека-питателя, Гц    </span><span class="value" id="Eco1_EI_82"> NaN </span></p>
+        <p ><span class="aiLabel">Давление на зоне 1, Па    </span><span class="value" id="Eco1_P_21"> NaN </span></p>
+        <p ><span class="aiLabel">Давление на зоне 2, Па    </span><span class="value" id="Eco1_P_22"> NaN </span></p>
+        <p ><span class="aiLabel">Давление в коллекторе, Па    </span><span class="value" id="Eco1_P_34"> NaN </span></p>
+        <p ><span class="aiLabel">Температура воды на город, °С    </span><span class="value" id="Eco1_T_41"> NaN </span></p>
+        <p ><span class="aiLabel">Температура воды обратной, °С    </span><span class="value" id="Eco1_T_42"> NaN </span></p>
+        <p ><span class="aiLabel">Разрежение в топке, Па </span><span class="value" id="Eco1_P_36"> NaN </span></p>
+        <p ><span class="aiLabel">ПЧ дымососа, Гц    </span><span class="value" id="Eco1_EI_86"> NaN </span></p>
+        <p ><span class="aiLabel">Давление воды в котле, МПа.   </span><span class="value" id="Eco1_P_19"> NaN </span></p> -->
+
+        <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.2.0/socket.io.js"></script>
+        <!-- <script src="/scripts/client.js" ></script> -->
+        <script>
+
+                    // пока так. потом с express сделаю удаенное подключение скриптов и css
+                       // console.log("clinet.js added");
+                        //........
+                        var socket = io.connect('http://95.158.47.15:3001');
+
+                        // Посетителя просят ввести имя пользователя...
+                        //  var username = prompt('What\'s your username?');
+                        var username = "testuser";
+
+                        // Оно отправляется в сообщении типа "little_newbie" (чтобы отличать его от сообщений типа "message")
+                        socket.emit('little_newbie', username);
+
+                        // Диалоговое окно отображается, когда сервер отправляет нам сообщение типа "message"
+                        socket.on('message', function(message) {
+                            console.log('The server has a message for you: ' + message);
+                            //alert('The server has a message for you: ' + message);
+                        });
+
+                        //$(document).ready(function() {
+                            
+                            socket.on('newdata', function(message) {
+                                //console.log('New data received: ' + message);
+                               // console.log( 'New data received: ' + JSON.parse(message));
+                                //alert('New data received: ');
+                                const dataM340 = JSON.parse(message);
+                                //alert(dataM340);
+
+                                document.getElementById('W_38').innerText = dataM340[25];
+                                document.getElementById('Q_39').innerText = dataM340[26];
+                                document.getElementById('P_21').innerText = dataM340[35];
+                                document.getElementById('P_34').innerText = dataM340[32];
+                                document.getElementById('EI_86').innerText = dataM340[17];
+                                document.getElementById('EI_83').innerText = dataM340[16];
+                                document.getElementById('EI_74').innerText = dataM340[14];
+                                document.getElementById('P_32').innerText = dataM340[31];
+                                document.getElementById('P_31').innerText = dataM340[30];
+                                document.getElementById('P_19').innerText = dataM340[34];
+                                document.getElementById('T_5').innerText = dataM340[5];
+                                document.getElementById('T_3').innerText = dataM340[3];
+                                document.getElementById('T_4').innerText = dataM340[19];
+                                document.getElementById('T_10').innerText = dataM340[8];
+                                document.getElementById('lastDayW_38').innerText = dataM340[49];
+
+                                // document.getElementById('Eco1_lastDayW_38').innerText = dataM340[48];
+                                // document.getElementById('Eco1_T_10').innerText = dataM340[47];
+                                // document.getElementById('Eco1_P_22').innerText = dataM340[46];
+                                // document.getElementById('Eco1_P_21').innerText = dataM340[45];
+                                // document.getElementById('Eco1_P_34').innerText = dataM340[44];
+                                // document.getElementById('Eco1_T_41').innerText = dataM340[43];
+                                // document.getElementById('Eco1_T_42').innerText = dataM340[42];
+                                // document.getElementById('Eco1_P_36').innerText = dataM340[41];
+                                // document.getElementById('Eco1_W_38').innerText = dataM340[40];
+                                // document.getElementById('Eco1_Q_39').innerText = dataM340[39];
+                                // document.getElementById('Eco1_EI_86').innerText = dataM340[38];
+                                // document.getElementById('Eco1_P_19').innerText = dataM340[37];
+                                // document.getElementById('Eco1_EI_82').innerText = dataM340[36];
+                            
+                            // document.getElementById('value2').innerText = dataM340[1];
+                           // $('#value3').text(dataM340[35]);
+                            // $('#value3').innerText = dataM340;
+                            });
+                        //})
+
+                        // // Когда нажимается кнопка, сообщение типа "message" отправляется на сервер
+                        // $('#poke').click(function () {
+                        //     socket.emit('message', 'Hi server, how are you?');
+                        // });
+        </script>
+        <!-- <script src="scripts/client-eco2.js"></script> -->
+        <script src="../scripts/test.js"></script>
+    </body>
+</html>

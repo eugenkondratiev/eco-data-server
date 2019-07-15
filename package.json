@@ -1,8 +1,9 @@
 {
-  "name": "modbus-communicate",
-  "version": "1.0.0",
+  "name": "eco-server",
+  "version": "1.1.0",
   "description": "",
-  "main": "main.js",
+  "main": "app.js",
+  "node-remote": "95.158.47.15",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -10,6 +11,7 @@
   "license": "ISC",
   "dependencies": {
     "modbus-serial": "^7.6.0",
-    "socket.io": "^2.2.0"
+    "socket.io": "^2.2.0",
+    "ws": "^7.1.0"
   }
 }
